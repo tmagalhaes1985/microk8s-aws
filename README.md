@@ -21,8 +21,8 @@ You can change the prefix ("flugel-microk8s-aws") modifying the variable `AMI_NA
 
 To build the AMI run:
 
-```console
-$ AMI_NAME_PREFIX=my-microk8s-ami make ami
+```bash
+AMI_NAME_PREFIX=my-microk8s-ami make ami
 ```
 
 ### Provisioning a new cluster
@@ -31,9 +31,9 @@ The directory `terraform` contains all you need to provision a new cluster after
 
 First install Terraform and any other dependency to the `terraform/bin` directory running:
 
-```console
-$ cd terraform
-$ ./ctl.sh deps
+```bash
+cd terraform
+./ctl.sh deps
 ```
 
 You need to specify the values of these Terraform variables to provision a cluster:
@@ -52,16 +52,17 @@ You can create a *tfvars* file to pass the variables values or provide them in e
 Inside the `terraform` directory you can find `wizard.sh`, a script to help you to set the values for all the variables.
 
 Example:
-```console
+
+```bash
 $ cd terraform
 $ ./wizard.sh
-AMI name filter [flugel-microk8s-aws-*]: 
-AMI owner filter [self]: 
-EC2 instance type [t2.micro]: 
-Tag Name [microk8s-aws]: 
-What is your internet IP address? [181.166.95.104]: 
-SSH public key file [/home/miguel/.ssh/id_rsa.pub]: 
-SSH private key file [/home/miguel/.ssh/id_rsa]: 
+AMI name filter [flugel-microk8s-aws-*]:
+AMI owner filter [self]:
+EC2 instance type [t2.micro]:
+Tag Name [microk8s-aws]:
+What is your internet IP address? [181.166.95.104]:
+SSH public key file [/home/miguel/.ssh/id_rsa.pub]:
+SSH private key file [/home/miguel/.ssh/id_rsa]:
 To setup your cluster:
 
 1) configure aws-cli
@@ -79,13 +80,13 @@ The wizard creates a `terraform.auto.tfvars` containing your preferences.
 
 Then inside the terraform directory run `./ctl.sh up` to provision your cluster.
 
-```console
-$ ./ctl.sh up
+```bash
+./ctl.sh up
 ```
 
 Terraform will inform you the actions to be executed, type "yes" if you agree. (Optionally you can use the `./ctl.sh up -auto-approve` to skip interactive approval of changes before applying them)
 
-```console
+```bash
 Do you want to perform these actions?
   Terraform will perform the actions described above.
   Only 'yes' will be accepted to approve.
@@ -97,7 +98,7 @@ This might take some minutes. There might be messages saying "Server not ready y
 
 When the script finishes it outputs importan information about how to use the cluster.
 
-```console
+```bash
 The IP address is 3.209.90.166
 The EC2 InstanceIds is i-0d88f7a8a4186d1ff
 Kubeconfig stored in ./kubeconfig file
@@ -107,16 +108,16 @@ You can connect using ssh -i key.pem ubuntu@3.209.90.166
 
 For example you can see the status of the node running:
 
-```console
-$ kubectl get nodes --kubeconfig=kubeconfig
+```bash
+kubectl get nodes --kubeconfig=kubeconfig
 ```
 
 ### Stoping the cluster
 
 To stop the cluster, but still be able to restart it later run this inside the terraform directory:
 
-```console
-$ ./ctl.sh stop
+```bash
+./ctl.sh stop
 ```
 
 This will free some resources, but not all (Volume and Elastic IP will be preserved).
@@ -125,24 +126,23 @@ This will free some resources, but not all (Volume and Elastic IP will be preser
 
 To restart a previously stopped cluster, run this inside the terraform directory:
 
-```console
-$ ./ctl.sh restart
+```bash
+./ctl.sh restart
 ```
 
 This might take some minutes, after that you will be able to use the cluster.
-
 
 ### Destroy a cluster to free all its resources
 
 You can free all your cluster resources running inside the terraform directory:
 
-```console
-$ ./ctl.sh destroy
+```bash
+./ctl.sh destroy
 ```
 
 Terraform will inform you the actions to be executed, type "yes" if you agree.  (Optionally you can use the `./ctl.sh destroy -auto-approve` to skip interactive approval of changes before applying them)
 
-```console
+```bash
 Do you really want to destroy all resources?
   Terraform will destroy all your managed infrastructure, as shown above.
   There is no undo. Only 'yes' will be accepted to confirm.
@@ -156,7 +156,7 @@ You can still recreate the cluster running `./ctl.sh up`
 
 ### Other ctl.sh commands
 
-```
+```bash
 Usage: ./ctl.sh <command> [args].
 
 Available commands:
@@ -173,7 +173,6 @@ stop           Stop the cluster without destroying its resources
 ## Moving the Terraform directory outside the project repository
 
 In some cases it might be useful to move the `terraform` directory to another place or repository. In that case just copy the directory and update the Terraform module source in `terraform/main.tf` to point to this repository.
-
 
 Example:
 
