@@ -1,0 +1,23 @@
+# name: Deploy Microk8s single-node cluster
+# on:
+#   workflow_dispatch:
+
+# jobs:
+#   make_ami:
+#     runs-on: ubuntu-latest
+#     env:
+#       AMI_NAME_PREFIX: flugel-microk8s-aws
+#     steps:
+#     - run: |
+#         sudo apt install -y awscli
+#         make install_packer
+#         make ami
+#   terraform_run:
+#     runs-on: ubuntu-latest
+#     env:
+#       TERRAFORM_VERSION: 0.13.5
+#     steps:
+#     - run: |
+#         curl -fsSL -o terraform.zip https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip
+#         unzip terraform.zip
+#         sudo install terraform /usr/local/bin/terraform
